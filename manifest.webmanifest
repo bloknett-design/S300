@@ -1,0 +1,55 @@
+{
+  "name": "Глоссарий S300 — EN→RU",
+  "short_name": "S300 Глоссарий",
+  "description": "Англо-русский глоссарий технических терминов по электрическим схемам декантерной центрифуги S300 (228 терминов с разбором словосочетаний)",
+  "lang": "ru",
+  "dir": "ltr",
+  "start_url": "./S300_глоссарий_EN-RU.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "any",
+  "background_color": "#1B2A4A",
+  "theme_color": "#1B2A4A",
+  "categories": ["education", "reference", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "pwa/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa/icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "pwa/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Поиск термина",
+      "short_name": "Поиск",
+      "description": "Открыть глоссарий и сразу перейти к поиску",
+      "url": "./S300_глоссарий_EN-RU.html?action=search"
+    },
+    {
+      "name": "Мои закладки",
+      "short_name": "Закладки",
+      "description": "Показать термины из закладок",
+      "url": "./S300_глоссарий_EN-RU.html?action=bookmarks"
+    }
+  ]
+}
