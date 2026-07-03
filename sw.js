@@ -1,9 +1,9 @@
 // Service Worker for S300 Glossary PWA
 // Strategy: cache-first for app shell, stale-while-revalidate for everything else
-const CACHE_VERSION = 's300-glossary-v1';
+const CACHE_VERSION = 's300-glossary-v2';
 const APP_SHELL = [
   './',
-  './S300_глоссарий_EN-RU.html',
+  './index.html',
   './manifest.webmanifest',
   './pwa/icon-192.png',
   './pwa/icon-512.png',
@@ -35,7 +35,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch: stale-while-revalidate
+// Fetch: stale-while-revalidate, with navigation fallback to index.html
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   
@@ -45,6 +45,14 @@ self.addEventListener('fetch', (event) => {
   // Skip cross-origin requests (e.g. external CDN fonts)
   const url = new URL(req.url);
   if (url.origin !== location.origin) return;
+  
+  // Navigation requests: try network first, fall back to cached index.html (app shell)
+  if (req.mode === 'navigate') {
+    event.respondWith(
+      fetch(req).catch(() => caches.match('./index.html').then(r => r || caches.match('./')))
+    );
+    return;
+  }
   
   event.respondWith(
     caches.match(req).then((cached) => {

@@ -4,7 +4,7 @@
   "description": "Англо-русский глоссарий технических терминов по электрическим схемам декантерной центрифуги S300 (228 терминов с разбором словосочетаний)",
   "lang": "ru",
   "dir": "ltr",
-  "start_url": "./S300_глоссарий_EN-RU.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui", "browser"],
@@ -43,13 +43,13 @@
       "name": "Поиск термина",
       "short_name": "Поиск",
       "description": "Открыть глоссарий и сразу перейти к поиску",
-      "url": "./S300_глоссарий_EN-RU.html?action=search"
+      "url": "./index.html?action=search"
     },
     {
       "name": "Мои закладки",
       "short_name": "Закладки",
       "description": "Показать термины из закладок",
-      "url": "./S300_глоссарий_EN-RU.html?action=bookmarks"
+      "url": "./index.html?action=bookmarks"
     }
   ]
 }

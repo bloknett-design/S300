@@ -1,0 +1,3519 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<meta name="theme-color" content="#1B2A4A" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#131417" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="S300 Глоссарий">
+<meta name="description" content="Англо-русский глоссарий технических терминов по электрическим схемам S300 (228 терминов)">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="./pwa/favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./pwa/icon-192.png">
+<link rel="apple-touch-icon" href="./pwa/apple-touch-icon.png">
+<title>Глоссарий · S300 Электросхемы · EN→RU</title>
+<style>
+:root {
+  --primary: #1B2A4A;
+  --primary-light: #D6E4F0;
+  --accent: #2E6FB5;
+  --accent-warm: #B85C1E;
+  --accent-green: #1B7D46;
+  --bg: #FAFAF9;
+  --card-bg: #FFFFFF;
+  --text: #1F1E1B;
+  --text-muted: #6B6963;
+  --border: #E9E9E8;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-hover: 0 4px 12px rgba(0,0,0,0.10);
+  --radius: 12px;
+  --header-h: 132px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+[data-theme="dark"] {
+  --primary: #4F7CB8;
+  --primary-light: #1E2D45;
+  --accent: #6FA0DC;
+  --accent-warm: #D88B4F;
+  --accent-green: #4CAF50;
+  --bg: #131417;
+  --card-bg: #1C1E22;
+  --text: #E8E6E0;
+  --text-muted: #98958C;
+  --border: #2A2D33;
+  --shadow: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-hover: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+               "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.25s, color 0.25s;
+  padding-bottom: var(--safe-bottom);
+}
+
+/* === Header === */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--primary);
+  color: #fff;
+  padding: calc(12px + var(--safe-top)) 14px 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.app-title {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.app-title .sub {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  opacity: 0.78;
+  margin-top: 2px;
+}
+
+.icon-btn {
+  background: rgba(255,255,255,0.13);
+  border: 0;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.15s;
+  flex-shrink: 0;
+  position: relative;
+}
+.icon-btn:active { transform: scale(0.92); background: rgba(255,255,255,0.25); }
+.icon-btn.active { background: var(--accent-warm); }
+.icon-btn .badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: var(--accent-warm);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid var(--primary);
+  display: none;
+}
+.icon-btn .badge.show { display: flex; }
+
+/* Search */
+.search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.search-wrap::before {
+  content: "🔍";
+  position: absolute;
+  left: 12px;
+  font-size: 14px;
+  opacity: 0.65;
+  pointer-events: none;
+}
+#search {
+  width: 100%;
+  padding: 11px 38px 11px 36px;
+  font-size: 16px;  /* 16px prevents iOS auto-zoom */
+  border: 0;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.92);
+  color: #1F1E1B;
+  -webkit-appearance: none;
+  outline: none;
+}
+#search::placeholder { color: #888; }
+#search:focus { background: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,0.25); }
+.clear-search {
+  position: absolute;
+  right: 8px;
+  background: transparent;
+  border: 0;
+  color: #888;
+  font-size: 18px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  border-radius: 50%;
+  display: none;
+}
+.clear-search.show { display: flex; align-items: center; justify-content: center; }
+.clear-search:active { background: rgba(0,0,0,0.08); }
+
+/* Alphabet */
+.alphabet {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 90;
+  background: var(--bg);
+  display: flex;
+  overflow-x: auto;
+  gap: 4px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.alphabet::-webkit-scrollbar { display: none; }
+
+.alpha-btn {
+  flex-shrink: 0;
+  min-width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text-muted);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0 6px;
+  transition: all 0.15s;
+}
+.alpha-btn:active { transform: scale(0.94); }
+.alpha-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.alpha-btn .count {
+  font-size: 10px;
+  font-weight: 400;
+  margin-left: 2px;
+  opacity: 0.7;
+}
+
+/* Filter toggle: words only / phrases only / all */
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 8px 12px 4px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.filter-tab {
+  flex: 1;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 6px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-tab:active { transform: scale(0.97); }
+.filter-tab.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.filter-tab .count {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-left: 2px;
+}
+
+/* === Main content === */
+main {
+  padding: 14px 12px 80px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.section-letter {
+  position: sticky;
+  top: 80px;
+  z-index: 80;
+  background: var(--bg);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+  padding: 14px 4px 8px;
+  margin: 0;
+  letter-spacing: -0.02em;
+  border-bottom: 2px solid var(--primary);
+  margin-bottom: 10px;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 14px 14px 12px;
+  margin-bottom: 8px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s, transform 0.15s;
+  border: 1px solid var(--border);
+  position: relative;
+}
+.card:active { transform: scale(0.99); box-shadow: var(--shadow-hover); }
+
+.card-en {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0 0 4px;
+  line-height: 1.3;
+  padding-right: 64px;
+  word-break: break-word;
+}
+.card-en .tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.card-en .tag.phrase { background: #FFE0B2; color: #8B4513; }
+[data-theme="dark"] .card-en .tag { background: rgba(79,124,184,0.25); color: var(--accent); }
+[data-theme="dark"] .card-en .tag.phrase { background: rgba(216,139,79,0.25); color: var(--accent-warm); }
+
+.card-ru {
+  font-size: 15px;
+  color: var(--text);
+  margin: 0 0 8px;
+  line-height: 1.45;
+}
+
+.card-ctx {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border);
+  line-height: 1.4;
+}
+.card-ctx::before { content: "📄 "; margin-right: 2px; }
+
+/* Component breakdown (expandable) */
+.components {
+  margin-top: 8px;
+  font-size: 13px;
+  display: none;
+}
+.components.show { display: block; }
+.components-toggle {
+  background: transparent;
+  border: 0;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 0;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.components-toggle:active { transform: scale(0.97); }
+.components-toggle .arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+}
+.components-toggle.open .arrow { transform: rotate(90deg); }
+
+.components-list {
+  list-style: none;
+  padding: 8px 0 0;
+  margin: 0;
+}
+.components-list li {
+  padding: 4px 0;
+  border-bottom: 1px dashed var(--border);
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  font-size: 13px;
+}
+.components-list li:last-child { border-bottom: 0; }
+.components-list .comp-en {
+  color: var(--accent);
+  font-weight: 600;
+  min-width: 90px;
+  flex-shrink: 0;
+}
+.components-list .comp-arrow {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+.components-list .comp-ru {
+  color: var(--text);
+  flex: 1;
+}
+
+/* Bookmark button */
+.bookmark-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: 0;
+  font-size: 18px;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.card:hover .bookmark-btn { opacity: 0.9; }
+.bookmark-btn:active { transform: scale(0.85); }
+.bookmark-btn.active { opacity: 1; color: var(--accent-warm); }
+
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+.empty .icon { font-size: 48px; margin-bottom: 10px; opacity: 0.5; }
+
+/* Stats banner */
+.stats {
+  text-align: center;
+  padding: 8px 0 14px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.stats b { color: var(--primary); }
+
+/* Back to top */
+.fab {
+  position: fixed;
+  bottom: calc(18px + var(--safe-bottom));
+  right: 18px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  border: 0;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fab.show { opacity: 1; transform: translateY(0); }
+.fab:active { transform: scale(0.92); }
+
+/* Filter chip */
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 6px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  margin: 8px 0 0;
+  font-weight: 500;
+}
+.filter-chip button {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+/* Install banner */
+.install-banner {
+  position: fixed;
+  bottom: calc(18px + var(--safe-bottom));
+  left: 18px;
+  right: 78px;
+  background: var(--primary);
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  z-index: 250;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+.install-banner.show { display: flex; }
+.install-banner .icon { font-size: 24px; flex-shrink: 0; }
+.install-banner .text { flex: 1; min-width: 0; }
+.install-banner .text b { display: block; font-size: 14px; margin-bottom: 2px; }
+.install-banner .text small { opacity: 0.85; font-size: 12px; }
+.install-banner button {
+  background: var(--accent-warm);
+  color: #fff;
+  border: 0;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.install-banner .close-x {
+  background: transparent;
+  padding: 4px 8px;
+  font-size: 18px;
+  color: rgba(255,255,255,0.7);
+}
+
+/* Larger screens: 2-column */
+@media (min-width: 640px) {
+  main { padding: 16px 16px 80px; }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    align-items: start;
+  }
+  .card { margin-bottom: 0; }
+  .section-letter { grid-column: 1 / -1; }
+}
+@media (min-width: 900px) {
+  .cards-grid { grid-template-columns: 1fr 1fr 1fr; }
+  :root { --header-h: 138px; }
+}
+
+/* Highlight matched text */
+mark {
+  background: #FFE082;
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 3px;
+}
+[data-theme="dark"] mark { background: #6B5413; color: #FFE082; }
+
+/* Toast notifications */
+.toast {
+  position: fixed;
+  bottom: calc(80px + var(--safe-bottom));
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 24px;
+  font-size: 13px;
+  z-index: 300;
+  opacity: 0;
+  transition: opacity 0.25s, transform 0.25s;
+  pointer-events: none;
+  max-width: 90vw;
+  text-align: center;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body data-theme="light">
+
+<header class="app-header">
+  <div class="header-top">
+    <div class="app-title">
+      Глоссарий · EN → RU
+      <span class="sub" id="subTitle">S300 Электросхемы · загрузка…</span>
+    </div>
+    <button class="icon-btn" id="bookmarksToggle" title="Закладки">
+      ★<span class="badge" id="bmBadge">0</span>
+    </button>
+    <button class="icon-btn" id="themeToggle" title="Тема">◐</button>
+  </div>
+  <div class="search-wrap">
+    <input id="search" type="search" inputmode="search"
+           placeholder="Поиск по слову, переводу или контексту…" autocomplete="off">
+    <button class="clear-search" id="clearSearch" title="Очистить">×</button>
+  </div>
+</header>
+
+<nav class="alphabet" id="alphabet"></nav>
+
+<div class="filter-tabs">
+  <button class="filter-tab active" data-filter="all">Все <span class="count" id="cnt-all">0</span></button>
+  <button class="filter-tab" data-filter="word">Слова <span class="count" id="cnt-word">0</span></button>
+  <button class="filter-tab" data-filter="phrase">Словосочетания <span class="count" id="cnt-phrase">0</span></button>
+</div>
+
+<main>
+  <div class="stats" id="stats"></div>
+  <div id="filterInfo"></div>
+  <div class="cards-grid" id="list"></div>
+</main>
+
+<button class="fab" id="toTop" title="Наверх">↑</button>
+
+<div class="install-banner" id="installBanner">
+  <span class="icon">📲</span>
+  <div class="text">
+    <b>Установить как приложение</b>
+    <small>Работает офлайн, быстрый доступ с домашнего экрана</small>
+  </div>
+  <button id="installBtn">Установить</button>
+  <button class="close-x" id="installClose">×</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const DATA = [
+  {
+    "en": "AC (Alternating Current)",
+    "ru": "переменный ток",
+    "ctx": "400/230V AC Power Supply — источник переменного тока 400/230 В (стр. 6)",
+    "comp": [
+      [
+        "AC",
+        "переменный ток"
+      ],
+      [
+        "Alternating",
+        "переменный"
+      ],
+      [
+        "Current",
+        "ток"
+      ]
+    ]
+  },
+  {
+    "en": "AI (Analog Input)",
+    "ru": "аналоговый вход (модуль аналоговых входов ПЛК)",
+    "ctx": "AI Analog Inputs — аналоговые входы модуля AI (стр. 19, 21)",
+    "comp": [
+      [
+        "AI",
+        "аналоговый вход"
+      ],
+      [
+        "Analog",
+        "аналоговый"
+      ],
+      [
+        "Input",
+        "вход"
+      ]
+    ]
+  },
+  {
+    "en": "Alarm",
+    "ru": "тревога, аварийный сигнал, сигнал аварий",
+    "ctx": "Decanter Alarm — тревога декантера (стр. 18–20)",
+    "comp": []
+  },
+  {
+    "en": "Ampere / A",
+    "ru": "ампер (единица силы тока)",
+    "ctx": "5A, 6A, 4A — значения тока срабатывания автоматов (стр. 6–9)",
+    "comp": []
+  },
+  {
+    "en": "Analog",
+    "ru": "аналоговый (непрерывный сигнал)",
+    "ctx": "Analog Input / Analog Output — аналоговый вх./вых. (стр. 19)",
+    "comp": []
+  },
+  {
+    "en": "Analog Input",
+    "ru": "аналоговый вход",
+    "ctx": "AI Analog Inputs — аналоговые входы (стр. 19, 21)",
+    "comp": [
+      [
+        "Analog",
+        "аналоговый"
+      ],
+      [
+        "Input",
+        "вход"
+      ]
+    ]
+  },
+  {
+    "en": "Analog Output",
+    "ru": "аналоговый выход",
+    "ctx": "CPU Analog Input/Outputs — аналоговые вх./вых. ЦП (стр. 19)",
+    "comp": [
+      [
+        "Analog",
+        "аналоговый"
+      ],
+      [
+        "Output",
+        "выход"
+      ]
+    ]
+  },
+  {
+    "en": "Appr.",
+    "ru": "утв. (утверждено; от англ. Approved — одобрено)",
+    "ctx": "Appr. — колонка утверждения в штампе листа (стр. 1–46)",
+    "comp": [
+      [
+        "Appr.",
+        "утверждено"
+      ],
+      [
+        "Approved",
+        "утверждено/одобрено"
+      ]
+    ]
+  },
+  {
+    "en": "Article",
+    "ru": "артикул, каталожный номер",
+    "ctx": "Cable article KABLO TTR 5G10 — артикул кабеля (стр. 43)",
+    "comp": []
+  },
+  {
+    "en": "Auxiliary",
+    "ru": "вспомогательный, добавочный",
+    "ctx": "Auxiliary input — вспомогательный вход (стр. 10)",
+    "comp": []
+  },
+  {
+    "en": "Auxiliary Input",
+    "ru": "вспомогательный вход (инвертора)",
+    "ctx": "Auxiliary input — вспомогательный вход инвертора (стр. 10)",
+    "comp": [
+      [
+        "Auxiliary",
+        "вспомогательный"
+      ],
+      [
+        "Input",
+        "вход"
+      ]
+    ]
+  },
+  {
+    "en": "Block",
+    "ru": "блок, колодка (клеммная)",
+    "ctx": "Terminal block — клеммная колодка (стр. 33)",
+    "comp": []
+  },
+  {
+    "en": "BN (Brown)",
+    "ru": "коричневый (цвет жилы провода)",
+    "ctx": "4x10 BN — сечение 4×10 мм², цвет коричневый (стр. 43)",
+    "comp": [
+      [
+        "BN",
+        "коричневый"
+      ],
+      [
+        "Brown",
+        "коричневый"
+      ]
+    ]
+  },
+  {
+    "en": "Bowl",
+    "ru": "барабан (центрифуги), ротор",
+    "ctx": "Decanter Bowl Speed Sensor — датчик скорости барабана (стр. 44)",
+    "comp": []
+  },
+  {
+    "en": "Breaker",
+    "ru": "выключатель, автомат (разговорное)",
+    "ctx": "Circuit Breaker — автоматический выключатель (стр. 6)",
+    "comp": []
+  },
+  {
+    "en": "BU (Blue)",
+    "ru": "синий (цвет жилы провода)",
+    "ctx": "BU — синий цвет нейтрали (стр. 8–9)",
+    "comp": [
+      [
+        "BU",
+        "синий"
+      ],
+      [
+        "Blue",
+        "синий"
+      ]
+    ]
+  },
+  {
+    "en": "Bus",
+    "ru": "шина, шинная магистраль (цифровая)",
+    "ctx": "Other bus systems — другие шинные системы (стр. 16)",
+    "comp": []
+  },
+  {
+    "en": "Bus System",
+    "ru": "шина данных, шинная система, интерфейсная шина",
+    "ctx": "Other bus systems — другие шинные системы HMI (стр. 16)",
+    "comp": [
+      [
+        "Bus",
+        "шина"
+      ],
+      [
+        "System",
+        "система"
+      ]
+    ]
+  },
+  {
+    "en": "Button",
+    "ru": "кнопка",
+    "ctx": "Decanter Start Button — кнопка пуска декантера (стр. 14)",
+    "comp": []
+  },
+  {
+    "en": "Cable",
+    "ru": "кабель",
+    "ctx": "Cable name =+P-W0 — обозначение кабеля (стр. 43)",
+    "comp": []
+  },
+  {
+    "en": "Cable Article",
+    "ru": "артикул кабеля, каталожный номер кабеля",
+    "ctx": "Cable article KABLO TTR 5G10 — артикул кабеля (стр. 43)",
+    "comp": [
+      [
+        "Cable",
+        "кабель"
+      ],
+      [
+        "Article",
+        "артикул"
+      ]
+    ]
+  },
+  {
+    "en": "Cable Connection Diagram",
+    "ru": "схема кабельных соединений",
+    "ctx": "Function designation: Cable connection diagram (стр. 4)",
+    "comp": [
+      [
+        "Cable",
+        "кабель"
+      ],
+      [
+        "Connection",
+        "соединение"
+      ],
+      [
+        "Diagram",
+        "схема/диаграмма"
+      ]
+    ]
+  },
+  {
+    "en": "Cable Diagram",
+    "ru": "кабельная диаграмма, схема кабельных соединений",
+    "ctx": "Cable diagram:WO :W11 :W11A :W12 (стр. 43)",
+    "comp": [
+      [
+        "Cable",
+        "кабель"
+      ],
+      [
+        "Diagram",
+        "диаграмма/схема"
+      ]
+    ]
+  },
+  {
+    "en": "Cable Name",
+    "ru": "обозначение кабеля, марка кабеля",
+    "ctx": "Cable name =+P-W11 (стр. 43)",
+    "comp": [
+      [
+        "Cable",
+        "кабель"
+      ],
+      [
+        "Name",
+        "обозначение/имя"
+      ]
+    ]
+  },
+  {
+    "en": "Cable Type",
+    "ru": "тип кабеля, марка кабеля",
+    "ctx": "Cable type: LIHCH 2G0,75 mm2 — тип кабеля (стр. 43)",
+    "comp": [
+      [
+        "Cable",
+        "кабель"
+      ],
+      [
+        "Type",
+        "тип/марка"
+      ]
+    ]
+  },
+  {
+    "en": "Cake",
+    "ru": "осадок, кек, твёрдый остаток (после центрифугирования)",
+    "ctx": "Cake Conveyor Run Relay — реле работы конвейера осадка (стр. 20)",
+    "comp": []
+  },
+  {
+    "en": "Cake Conveyor",
+    "ru": "конвейер осадка, транспортер кека",
+    "ctx": "Cake Conveyor Start Button — кнопка пуска конвейера осадка (стр. 14)",
+    "comp": [
+      [
+        "Cake",
+        "осадок/кек"
+      ],
+      [
+        "Conveyor",
+        "конвейер/транспортёр"
+      ]
+    ]
+  },
+  {
+    "en": "Channel",
+    "ru": "канал (входного/выходного модуля)",
+    "ctx": "Channel 1 / Channel 2 — канал 1 / канал 2 (стр. 24–25)",
+    "comp": []
+  },
+  {
+    "en": "Circuit",
+    "ru": "электрическая цепь, схема, контур",
+    "ctx": "Circuit Breaker — автоматический выключатель (стр. 6)",
+    "comp": []
+  },
+  {
+    "en": "Circuit Breaker",
+    "ru": "автоматический выключатель, автомат",
+    "ctx": "400 V 6kA, 2-pole, C, 4A — параметры автомата (стр. 6)",
+    "comp": [
+      [
+        "Circuit",
+        "электрическая цепь"
+      ],
+      [
+        "Breaker",
+        "выключатель"
+      ]
+    ]
+  },
+  {
+    "en": "Cleaning",
+    "ru": "очистка, промывка",
+    "ctx": "Cleaning Valve — клапан промывки (стр. 20)",
+    "comp": []
+  },
+  {
+    "en": "Cleaning Valve",
+    "ru": "клапан промывки, промывочный клапан",
+    "ctx": "Decanter Cleaning Valve Run Relay (стр. 20)",
+    "comp": [
+      [
+        "Cleaning",
+        "очистка/промывка"
+      ],
+      [
+        "Valve",
+        "клапан"
+      ]
+    ]
+  },
+  {
+    "en": "CM",
+    "ru": "общий вывод (Common), общая клемма инвертора",
+    "ctx": "cM PLC EN1 EN2 cM — общие выводы инвертора (стр. 26)",
+    "comp": [
+      [
+        "CM",
+        "общий (Common)"
+      ],
+      [
+        "Common",
+        "общий"
+      ]
+    ]
+  },
+  {
+    "en": "Connection",
+    "ru": "соединение, подключение",
+    "ctx": "Relay Connections — подключения реле (стр. 22–23)",
+    "comp": []
+  },
+  {
+    "en": "Connections",
+    "ru": "соединения, подключения",
+    "ctx": "Inverter Power Connections — силовые подключения инвертора (стр. 10)",
+    "comp": [
+      [
+        "Connection",
+        "соединение"
+      ],
+      [
+        "Connections",
+        "соединения (мн.ч.)"
+      ]
+    ]
+  },
+  {
+    "en": "Contact",
+    "ru": "контакт",
+    "ctx": "SD-D/SC/LA CONTACT — контакт (стр. 8)",
+    "comp": []
+  },
+  {
+    "en": "Contact Output",
+    "ru": "контактный выход (сухой контакт)",
+    "ctx": "Contact output — контактный выход инвертора (стр. 26)",
+    "comp": [
+      [
+        "Contact",
+        "контакт"
+      ],
+      [
+        "Output",
+        "выход"
+      ]
+    ]
+  },
+  {
+    "en": "Contactor",
+    "ru": "контактор",
+    "ctx": "Decanter Running Hour Pump Contactor — контактор (стр. 22)",
+    "comp": []
+  },
+  {
+    "en": "Contents",
+    "ru": "содержание, оглавление",
+    "ctx": "Table of contents — оглавление (стр. 2–3)",
+    "comp": []
+  },
+  {
+    "en": "Control",
+    "ru": "управление; управляющий",
+    "ctx": "Inverter Control Connections — подключения цепей управления инвертора (стр. 26)",
+    "comp": []
+  },
+  {
+    "en": "Control Connection",
+    "ru": "подключение цепей управления, управляющее подключение",
+    "ctx": "Inverter Control Connections — подключения цепей управления (стр. 26)",
+    "comp": [
+      [
+        "Control",
+        "управление/управляющий"
+      ],
+      [
+        "Connection",
+        "соединение"
+      ]
+    ]
+  },
+  {
+    "en": "Converter",
+    "ru": "преобразователь, конвертер",
+    "ctx": "Speed Sensors Converter — преобразователь датчиков скорости (стр. 24)",
+    "comp": []
+  },
+  {
+    "en": "Conveyor",
+    "ru": "конвейер, транспортёр, шнек подачи",
+    "ctx": "Cake Conveyor — конвейер осадка (стр. 14, 20)",
+    "comp": []
+  },
+  {
+    "en": "Cover",
+    "ru": "крышка, кожух, ограждение",
+    "ctx": "Decanter Cover Switch — выключатель крышки декантера (стр. 29)",
+    "comp": []
+  },
+  {
+    "en": "Cover Sheet",
+    "ru": "титульный лист",
+    "ctx": "Document type: Cover sheet (стр. 4)",
+    "comp": [
+      [
+        "Cover",
+        "обложка/крышка"
+      ],
+      [
+        "Sheet",
+        "лист"
+      ]
+    ]
+  },
+  {
+    "en": "Cover Switch",
+    "ru": "выключатель (датчик) крышки",
+    "ctx": "Decanter Cover Switch — выключатель крышки декантера (стр. 29)",
+    "comp": [
+      [
+        "Cover",
+        "крышка"
+      ],
+      [
+        "Switch",
+        "выключатель"
+      ]
+    ]
+  },
+  {
+    "en": "CPU",
+    "ru": "центральный процессор, ЦП (в ПЛК)",
+    "ctx": "CPU Overview — обзор ЦП (стр. 14)",
+    "comp": []
+  },
+  {
+    "en": "CPU & HMI Power Supply",
+    "ru": "источник питания ЦП и HMI",
+    "ctx": "CPU & HMI Power Supply — питание ЦП и панели оператора (стр. 16)",
+    "comp": [
+      [
+        "CPU",
+        "ЦП"
+      ],
+      [
+        "HMI",
+        "панель оператора"
+      ],
+      [
+        "Power",
+        "питание"
+      ],
+      [
+        "Supply",
+        "источник"
+      ]
+    ]
+  },
+  {
+    "en": "Date",
+    "ru": "дата",
+    "ctx": "Date: 26.01.2023 — дата (стр. 1)",
+    "comp": []
+  },
+  {
+    "en": "DC (Direct Current)",
+    "ru": "постоянный ток",
+    "ctx": "24V DC Power Supply — источник питания 24 В пост. тока (стр. 7)",
+    "comp": [
+      [
+        "DC",
+        "постоянный ток"
+      ],
+      [
+        "Direct",
+        "постоянный"
+      ],
+      [
+        "Current",
+        "ток"
+      ]
+    ]
+  },
+  {
+    "en": "Decanter",
+    "ru": "декантер (центрифуга со шнековой выгрузкой)",
+    "ctx": "Decanter Main Motor — главный двигатель декантера (стр. 10)",
+    "comp": []
+  },
+  {
+    "en": "Decanter Box Connections",
+    "ru": "подключения клеммной коробки декантера",
+    "ctx": "Location designation: Decanter Box Connections (стр. 4–5)",
+    "comp": [
+      [
+        "Decanter",
+        "декантер"
+      ],
+      [
+        "Box",
+        "коробка/клеммная коробка"
+      ],
+      [
+        "Connections",
+        "соединения"
+      ]
+    ]
+  },
+  {
+    "en": "DIa / DIb",
+    "ru": "группа дискретных входов A/B (DIa/DIb — Siemens S7-1200)",
+    "ctx": "DIa.0 / DIb.0 — дискретные входы групп A/B (стр. 14)",
+    "comp": [
+      [
+        "DI",
+        "дискретный вход (Digital Input)"
+      ],
+      [
+        "a/b",
+        "группа A / группа B"
+      ]
+    ]
+  },
+  {
+    "en": "Diagram",
+    "ru": "схема, диаграмма, чертёж",
+    "ctx": "Cable diagram / Terminal diagram — кабельная/клеммная схема (стр. 33, 43)",
+    "comp": []
+  },
+  {
+    "en": "Digital",
+    "ru": "дискретный, цифровой",
+    "ctx": "Digital Input — дискретный вход (стр. 18)",
+    "comp": []
+  },
+  {
+    "en": "Digital Input",
+    "ru": "дискретный (цифровой) вход",
+    "ctx": "CPU Digital Inputs — дискретные входы ЦП (стр. 18)",
+    "comp": [
+      [
+        "Digital",
+        "дискретный/цифровой"
+      ],
+      [
+        "Input",
+        "вход"
+      ]
+    ]
+  },
+  {
+    "en": "Digital Output",
+    "ru": "дискретный (цифровой) выход",
+    "ctx": "CPU Digital Outputs — дискретные выходы ЦП (стр. 20)",
+    "comp": [
+      [
+        "Digital",
+        "дискретный/цифровой"
+      ],
+      [
+        "Output",
+        "выход"
+      ]
+    ]
+  },
+  {
+    "en": "Document",
+    "ru": "документ",
+    "ctx": "Document type — тип документа (стр. 4)",
+    "comp": []
+  },
+  {
+    "en": "Document Type",
+    "ru": "тип документа",
+    "ctx": "Document type: Electrical schematic (стр. 4)",
+    "comp": [
+      [
+        "Document",
+        "документ"
+      ],
+      [
+        "Type",
+        "тип"
+      ]
+    ]
+  },
+  {
+    "en": "DQa / DQb",
+    "ru": "группа дискретных выходов A/B (DQa/DQb — Siemens S7-1200)",
+    "ctx": "DQa.0 / DQb.0 — дискретные выходы групп A/B (стр. 20)",
+    "comp": [
+      [
+        "DQ",
+        "дискретный выход (Digital Output)"
+      ],
+      [
+        "a/b",
+        "группа A / группа B"
+      ]
+    ]
+  },
+  {
+    "en": "Draht (нем.)",
+    "ru": "провод, жила (немецкий термин EPLAN)",
+    "ctx": "2-Draht / 4-Draht Messumformer — 2-проводной / 4-проводной преобразователь (стр. 15, 21)",
+    "comp": [
+      [
+        "Draht",
+        "провод (нем.)"
+      ],
+      [
+        "2-Draht",
+        "2-проводной"
+      ],
+      [
+        "4-Draht",
+        "4-проводной"
+      ]
+    ]
+  },
+  {
+    "en": "Ed. (Edition)",
+    "ru": "редакция, выпуск",
+    "ctx": "Ed. — редакция документа (стр. 1)",
+    "comp": [
+      [
+        "Ed.",
+        "редакция"
+      ],
+      [
+        "Edition",
+        "редакция/выпуск"
+      ]
+    ]
+  },
+  {
+    "en": "Edited by",
+    "ru": "редактор, исполнитель (кто редактировал лист)",
+    "ctx": "Edited by — колонка исполнителя в штампе (стр. 4)",
+    "comp": [
+      [
+        "Edited",
+        "отредактировано"
+      ],
+      [
+        "by",
+        "кем (предлог)"
+      ]
+    ]
+  },
+  {
+    "en": "Electric",
+    "ru": "электрический",
+    "ctx": "Fuji Electric — Fuji Electric (бренд) (стр. 10)",
+    "comp": []
+  },
+  {
+    "en": "Electrical",
+    "ru": "электрический",
+    "ctx": "Electrical schematic — электрическая схема (стр. 4)",
+    "comp": []
+  },
+  {
+    "en": "Electrical Schematic",
+    "ru": "электрическая схема",
+    "ctx": "Document type: Electrical schematic (стр. 4)",
+    "comp": [
+      [
+        "Electrical",
+        "электрическая"
+      ],
+      [
+        "Schematic",
+        "схема"
+      ]
+    ]
+  },
+  {
+    "en": "Emergency",
+    "ru": "аварийный, экстренный",
+    "ctx": "Emergency Stop — аварийная остановка (стр. 28)",
+    "comp": []
+  },
+  {
+    "en": "Emergency Stop",
+    "ru": "аварийная остановка, аварийный стоп",
+    "ctx": "Emergency Stop Safety Relay — реле безопасности аварийной остановки (стр. 28)",
+    "comp": [
+      [
+        "Emergency",
+        "аварийный"
+      ],
+      [
+        "Stop",
+        "останов/стоп"
+      ]
+    ]
+  },
+  {
+    "en": "Enclosure",
+    "ru": "шкаф, корпус, оболочка (электротехнического устройства)",
+    "ctx": "Enclosure — корпус шкафа (стр. 5)",
+    "comp": []
+  },
+  {
+    "en": "Enclosure Lighting",
+    "ru": "освещение шкафа",
+    "ctx": "Enclosure Lighting — освещение шкафа (стр. 8)",
+    "comp": [
+      [
+        "Enclosure",
+        "шкаф/корпус"
+      ],
+      [
+        "Lighting",
+        "освещение"
+      ]
+    ]
+  },
+  {
+    "en": "Enclosure Ventilation",
+    "ru": "вентиляция шкафа",
+    "ctx": "Enclosure Ventilation — вентиляция шкафа (стр. 9)",
+    "comp": [
+      [
+        "Enclosure",
+        "шкаф"
+      ],
+      [
+        "Ventilation",
+        "вентиляция"
+      ]
+    ]
+  },
+  {
+    "en": "Fault",
+    "ru": "неисправность, авария, отказ, повреждение",
+    "ctx": "Inverter Fault — неисправность инвертора (стр. 14)",
+    "comp": []
+  },
+  {
+    "en": "Feed",
+    "ru": "подача, питание, питающий",
+    "ctx": "Feed Pump — питающий насос (стр. 12)",
+    "comp": []
+  },
+  {
+    "en": "Feed Pump",
+    "ru": "питательный насос, насос подачи",
+    "ctx": "Decanter Feed Pump — питательный насос декантера (стр. 12)",
+    "comp": [
+      [
+        "Feed",
+        "подача/питающий"
+      ],
+      [
+        "Pump",
+        "насос"
+      ]
+    ]
+  },
+  {
+    "en": "Field",
+    "ru": "поле (на листе схемы); поле данных",
+    "ctx": "Page description supplementary page field — поле описания листа (стр. 4)",
+    "comp": []
+  },
+  {
+    "en": "Flow",
+    "ru": "поток, расход (жидкости)",
+    "ctx": "Flow Meter — расходомер (стр. 12)",
+    "comp": []
+  },
+  {
+    "en": "Flow Meter",
+    "ru": "расходомер",
+    "ctx": "Feed Pump Flow Meter — расходомер питающего насоса (стр. 12)",
+    "comp": [
+      [
+        "Flow",
+        "поток/расход"
+      ],
+      [
+        "Meter",
+        "измеритель/счётчик"
+      ]
+    ]
+  },
+  {
+    "en": "FM1 / FM2",
+    "ru": "выход частоты 1 / выход частоты 2 инвертора (Frequency Monitor)",
+    "ctx": "FM1 FM2 — выходы частотомера инвертора Fuji (стр. 26)",
+    "comp": [
+      [
+        "FM",
+        "монитор частоты (Frequency Monitor)"
+      ],
+      [
+        "1/2",
+        "выход 1 / выход 2"
+      ]
+    ]
+  },
+  {
+    "en": "FML",
+    "ru": "выход аналогового частотомера инвертора",
+    "ctx": "FMP FML FM2 — выходы инвертора (стр. 26)",
+    "comp": [
+      [
+        "FM",
+        "монитор частоты"
+      ],
+      [
+        "L",
+        "линейный (Linear)/аналоговый"
+      ]
+    ]
+  },
+  {
+    "en": "FMP",
+    "ru": "выход импульсного частотомера инвертора (Frequency Monitor Pulse)",
+    "ctx": "FMP FML — выходы частоты инвертора (стр. 26)",
+    "comp": [
+      [
+        "FM",
+        "монитор частоты"
+      ],
+      [
+        "P",
+        "импульсный (Pulse)"
+      ]
+    ]
+  },
+  {
+    "en": "Forward (FWD)",
+    "ru": "вперёд, прямое вращение (команда инвертора)",
+    "ctx": "FWD REV — команды вперёд/назад инвертора (стр. 26)",
+    "comp": [
+      [
+        "Forward",
+        "вперёд"
+      ],
+      [
+        "FWD",
+        "сокр.: вперёд"
+      ]
+    ]
+  },
+  {
+    "en": "Free",
+    "ru": "свободный, резервный",
+    "ctx": "Free wires — свободные жилы (стр. 43)",
+    "comp": []
+  },
+  {
+    "en": "Free Wires",
+    "ru": "свободные жилы, резервные провода",
+    "ctx": "Free wires: 0 — количество свободных жил (стр. 43)",
+    "comp": [
+      [
+        "Free",
+        "свободный/резервный"
+      ],
+      [
+        "Wires",
+        "провода/жилы"
+      ]
+    ]
+  },
+  {
+    "en": "Frequency",
+    "ru": "частота",
+    "ctx": "Frequency Inverter — преобразователь частоты (инвертор) (стр. 10)",
+    "comp": []
+  },
+  {
+    "en": "Frequency Inverter",
+    "ru": "преобразователь частоты, инвертор",
+    "ctx": "Decanter Main Motor Frequency Inverter — ПЧ главного двигателя (стр. 10)",
+    "comp": [
+      [
+        "Frequency",
+        "частота"
+      ],
+      [
+        "Inverter",
+        "инвертор/преобразователь"
+      ]
+    ]
+  },
+  {
+    "en": "Function",
+    "ru": "функция, функциональный",
+    "ctx": "Function text — функциональный текст (стр. 43)",
+    "comp": []
+  },
+  {
+    "en": "Function Designation",
+    "ru": "функциональное обозначение",
+    "ctx": "Function designation: Terminal connection diagram (стр. 4)",
+    "comp": [
+      [
+        "Function",
+        "функция"
+      ],
+      [
+        "Designation",
+        "обозначение"
+      ]
+    ]
+  },
+  {
+    "en": "Function Text",
+    "ru": "функциональный текст, описание функции",
+    "ctx": "Function text: Decanter Main Motor (стр. 43)",
+    "comp": [
+      [
+        "Function",
+        "функция"
+      ],
+      [
+        "Text",
+        "текст"
+      ]
+    ]
+  },
+  {
+    "en": "Function Text Source",
+    "ru": "функциональный текст источника, описание функции источника",
+    "ctx": "Function text source — текст функции источника в кабельной диаграмме EPLAN (стр. 43)",
+    "comp": [
+      [
+        "Function",
+        "функция"
+      ],
+      [
+        "Text",
+        "текст"
+      ],
+      [
+        "Source",
+        "источник"
+      ]
+    ]
+  },
+  {
+    "en": "Function Text Target",
+    "ru": "функциональный текст приёмника (цели), описание функции приёмника",
+    "ctx": "Function text target — текст функции приёмника в кабельной диаграмме EPLAN (стр. 43–45)",
+    "comp": [
+      [
+        "Function",
+        "функция"
+      ],
+      [
+        "Text",
+        "текст"
+      ],
+      [
+        "Target",
+        "приёмник/цель"
+      ]
+    ]
+  },
+  {
+    "en": "Fuse",
+    "ru": "предохранитель, плавкая вставка",
+    "ctx": "F6/F7/F8 — обозначения предохранителей (стр. 6)",
+    "comp": []
+  },
+  {
+    "en": "GN (Green)",
+    "ru": "зелёный (цвет жилы провода)",
+    "ctx": "GN/YE PE — зелёно-жёлтый защитный заземлитель (стр. 43)",
+    "comp": [
+      [
+        "GN",
+        "зелёный"
+      ],
+      [
+        "Green",
+        "зелёный"
+      ]
+    ]
+  },
+  {
+    "en": "GN/YE (Green-Yellow)",
+    "ru": "зелёно-жёлтый (цвет жилы защитного заземления PE)",
+    "ctx": "GN/YE PE — зелёно-жёлтый защитный заземлитель (стр. 43)",
+    "comp": [
+      [
+        "GN",
+        "зелёный"
+      ],
+      [
+        "YE",
+        "жёлтый"
+      ],
+      [
+        "Green-Yellow",
+        "зелёно-жёлтый"
+      ]
+    ]
+  },
+  {
+    "en": "Ground",
+    "ru": "заземление, земля (общая точка цепи)",
+    "ctx": "PE Ground — защитное заземление (стр. 6)",
+    "comp": []
+  },
+  {
+    "en": "Harness",
+    "ru": "жгут проводов, кабельный жгут",
+    "ctx": "Кабели LIHCH/NYSLYO-J в составе жгутов (стр. 43–46)",
+    "comp": []
+  },
+  {
+    "en": "Hertz / Hz",
+    "ru": "герц (единица частоты)",
+    "ctx": "50 Hz — частота сети 50 Гц (стр. 1)",
+    "comp": []
+  },
+  {
+    "en": "HMI",
+    "ru": "человеко-машинный интерфейс (панель оператора)",
+    "ctx": "SIMATIC HMI — панель оператора Siemens (стр. 16)",
+    "comp": []
+  },
+  {
+    "en": "Hour",
+    "ru": "час, часовой",
+    "ctx": "Running Hour Meter — счётчик часов работы (стр. 22)",
+    "comp": []
+  },
+  {
+    "en": "Hour Meter",
+    "ru": "счётчик часов наработки, счётчик моточасов",
+    "ctx": "Decanter Running Hour Meter — счётчик часов работы (стр. 22)",
+    "comp": [
+      [
+        "Hour",
+        "час"
+      ],
+      [
+        "Meter",
+        "счётчик/измеритель"
+      ]
+    ]
+  },
+  {
+    "en": "Identifier",
+    "ru": "идентификатор, обозначение",
+    "ctx": "Structure identifier overview — обзор структурных идентификаторов (стр. 4)",
+    "comp": []
+  },
+  {
+    "en": "Input",
+    "ru": "вход",
+    "ctx": "INPUT/OUTPUT — вход/выход блока питания (стр. 7)",
+    "comp": []
+  },
+  {
+    "en": "Inputs",
+    "ru": "входы (множ. ч.)",
+    "ctx": "CPU Digital Inputs — дискретные входы ЦП (стр. 18)",
+    "comp": [
+      [
+        "Input",
+        "вход"
+      ],
+      [
+        "Inputs",
+        "входы (мн.ч.)"
+      ]
+    ]
+  },
+  {
+    "en": "Inverter",
+    "ru": "инвертор, преобразователь частоты",
+    "ctx": "Decanter Main Motor Inverter — инвертор главного двигателя (стр. 10)",
+    "comp": []
+  },
+  {
+    "en": "Inverter Control Connection",
+    "ru": "подключение цепей управления инвертора",
+    "ctx": "Decanter Main Motor Inverter Control Connections (стр. 26)",
+    "comp": [
+      [
+        "Inverter",
+        "инвертор"
+      ],
+      [
+        "Control",
+        "управление"
+      ],
+      [
+        "Connection",
+        "соединение"
+      ]
+    ]
+  },
+  {
+    "en": "Inverter Fault",
+    "ru": "неисправность инвертора, авария инвертора",
+    "ctx": "Decanter Main Motor Inverter Fault — неисправность ПЧ главного двигателя (стр. 14)",
+    "comp": [
+      [
+        "Inverter",
+        "инвертор"
+      ],
+      [
+        "Fault",
+        "неисправность"
+      ]
+    ]
+  },
+  {
+    "en": "Inverter Power Connection",
+    "ru": "силовое подключение инвертора",
+    "ctx": "Inverter Power Connections — силовые подключения инвертора (стр. 10)",
+    "comp": [
+      [
+        "Inverter",
+        "инвертор"
+      ],
+      [
+        "Power",
+        "сила/питание"
+      ],
+      [
+        "Connection",
+        "соединение"
+      ]
+    ]
+  },
+  {
+    "en": "kA (kiloampere)",
+    "ru": "килоампер (1000 А) — единица отключающей способности автомата",
+    "ctx": "6kA — отключающая способность автомата 6000 А (стр. 6)",
+    "comp": [
+      [
+        "k",
+        "кило (1000)"
+      ],
+      [
+        "A",
+        "ампер"
+      ]
+    ]
+  },
+  {
+    "en": "L1 / L2 / L3",
+    "ru": "фазы L1/L2/L3 трёхфазной сети",
+    "ctx": "-L1/5.0 -L2/5.0 -L3/5.0 — фазы трёхфазного ввода (стр. 6)",
+    "comp": [
+      [
+        "L",
+        "линия/фаза (Line)"
+      ],
+      [
+        "1/2/3",
+        "номер фазы"
+      ]
+    ]
+  },
+  {
+    "en": "Lamp",
+    "ru": "лампа, сигнальная лампа",
+    "ctx": "Decanter Running Lamb — сигнальная лампа работы декантера (стр. 23)",
+    "comp": []
+  },
+  {
+    "en": "Lighting",
+    "ru": "освещение",
+    "ctx": "Enclosure Lighting — освещение шкафа (стр. 8)",
+    "comp": []
+  },
+  {
+    "en": "Line",
+    "ru": "линия (электрическая), фаза",
+    "ctx": "L1/L2/L3 (Line) — линейные провода (стр. 6)",
+    "comp": []
+  },
+  {
+    "en": "Liquid",
+    "ru": "жидкость, жидкий",
+    "ctx": "Liquid Side — жидкостная сторона (стр. 15)",
+    "comp": []
+  },
+  {
+    "en": "Liquid Side",
+    "ru": "жидкостная сторона, сторона слива (декантера)",
+    "ctx": "Decanter Liquid Side Vibration Sensor — датчик вибрации на жидкостной стороне (стр. 15)",
+    "comp": [
+      [
+        "Liquid",
+        "жидкость/жидкий"
+      ],
+      [
+        "Side",
+        "сторона"
+      ]
+    ]
+  },
+  {
+    "en": "Local",
+    "ru": "местный, локальный",
+    "ctx": "Local Panel — местная панель (стр. 5)",
+    "comp": []
+  },
+  {
+    "en": "Local Panel",
+    "ru": "местная панель, локальная панель управления",
+    "ctx": "Local Panel — местная панель управления (стр. 5)",
+    "comp": [
+      [
+        "Local",
+        "местный"
+      ],
+      [
+        "Panel",
+        "панель/щит"
+      ]
+    ]
+  },
+  {
+    "en": "Location",
+    "ru": "местоположение, место установки",
+    "ctx": "Location designation — позиционное обозначение (стр. 4)",
+    "comp": []
+  },
+  {
+    "en": "Location Designation",
+    "ru": "позиционное обозначение, обозначение места установки",
+    "ctx": "Location designation: Enclosure / Decanter (стр. 4)",
+    "comp": [
+      [
+        "Location",
+        "местоположение"
+      ],
+      [
+        "Designation",
+        "обозначение"
+      ]
+    ]
+  },
+  {
+    "en": "Lubrication",
+    "ru": "смазка, смазывание",
+    "ctx": "Lubrication Pump — насос смазки (стр. 22)",
+    "comp": []
+  },
+  {
+    "en": "Lubrication Pump",
+    "ru": "насос смазки",
+    "ctx": "Decanter Lubrication Pump Run — работа насоса смазки (стр. 22)",
+    "comp": [
+      [
+        "Lubrication",
+        "смазка"
+      ],
+      [
+        "Pump",
+        "насос"
+      ]
+    ]
+  },
+  {
+    "en": "Main",
+    "ru": "главный, основной",
+    "ctx": "Main Motor — главный двигатель (стр. 10)",
+    "comp": []
+  },
+  {
+    "en": "Main Motor",
+    "ru": "главный двигатель, основной двигатель",
+    "ctx": "Decanter Main Motor — главный двигатель декантера (стр. 10)",
+    "comp": [
+      [
+        "Main",
+        "главный"
+      ],
+      [
+        "Motor",
+        "двигатель"
+      ]
+    ]
+  },
+  {
+    "en": "Messumformer (нем.)",
+    "ru": "измерительный преобразователь (немецкий термин EPLAN)",
+    "ctx": "2-Draht Messumformer — 2-проводной измерительный преобразователь (стр. 15, 21)",
+    "comp": [
+      [
+        "Messer",
+        "измеритель (нем.)"
+      ],
+      [
+        "Umformer",
+        "преобразователь (нем.)"
+      ]
+    ]
+  },
+  {
+    "en": "Meter",
+    "ru": "измерительный прибор, счётчик; метр (единица длины)",
+    "ctx": "Flow Meter / Hour Meter — расходомер / счётчик часов (стр. 12, 22)",
+    "comp": []
+  },
+  {
+    "en": "mm²",
+    "ru": "квадратный миллиметр (единица сечения провода)",
+    "ctx": "4x10 mm2 — сечение 4×10 мм² (стр. 43)",
+    "comp": []
+  },
+  {
+    "en": "Module",
+    "ru": "модуль",
+    "ctx": "RS485 Module Connections — подключения модуля RS485 (стр. 17)",
+    "comp": []
+  },
+  {
+    "en": "Monitoring",
+    "ru": "контроль, мониторинг",
+    "ctx": "Speed Monitoring — контроль скорости (стр. 24)",
+    "comp": []
+  },
+  {
+    "en": "Motor",
+    "ru": "двигатель, электромотор",
+    "ctx": "Decanter Scroll Motor — двигатель шнека декантера (стр. 11)",
+    "comp": []
+  },
+  {
+    "en": "Mounting",
+    "ru": "монтаж, установка",
+    "ctx": "Mounting Locations — места установки (стр. 5)",
+    "comp": []
+  },
+  {
+    "en": "Mounting Location",
+    "ru": "место установки, место монтажа",
+    "ctx": "Mounting Locations — места установки (стр. 5)",
+    "comp": [
+      [
+        "Mounting",
+        "монтаж/установка"
+      ],
+      [
+        "Location",
+        "местоположение"
+      ]
+    ]
+  },
+  {
+    "en": "N (Neutral)",
+    "ru": "нейтраль, нулевой провод",
+    "ctx": "-N/ — нейтраль в кабелях питания (стр. 6)",
+    "comp": [
+      [
+        "N",
+        "нейтраль"
+      ],
+      [
+        "Neutral",
+        "нейтральный/нулевой"
+      ]
+    ]
+  },
+  {
+    "en": "NC (Normally Closed)",
+    "ru": "нормально замкнутый (контакт)",
+    "ctx": "NC / NO — нормально замкнутый / разомкнутый (стр. 22)",
+    "comp": [
+      [
+        "NC",
+        "нормально замкнутый"
+      ],
+      [
+        "Normally",
+        "нормально"
+      ],
+      [
+        "Closed",
+        "замкнутый"
+      ]
+    ]
+  },
+  {
+    "en": "NO (Normally Open)",
+    "ru": "нормально разомкнутый (контакт)",
+    "ctx": "NO / NC — нормально разомкнутый / замкнутый (стр. 22)",
+    "comp": [
+      [
+        "NO",
+        "нормально разомкнутый"
+      ],
+      [
+        "Normally",
+        "нормально"
+      ],
+      [
+        "Open",
+        "разомкнутый/открытый"
+      ]
+    ]
+  },
+  {
+    "en": "Number",
+    "ru": "номер, число",
+    "ctx": "Order number — заказной номер (стр. 43)",
+    "comp": []
+  },
+  {
+    "en": "Open",
+    "ru": "открытый, разомкнутый; открывать(ся)",
+    "ctx": "Decanter Cover Open — крышка декантера открыта (стр. 14)",
+    "comp": []
+  },
+  {
+    "en": "Order",
+    "ru": "заказ",
+    "ctx": "Order number — заказной номер (стр. 43)",
+    "comp": []
+  },
+  {
+    "en": "Order Number",
+    "ru": "заказной номер, артикул",
+    "ctx": "Order number: 1133506 — заказной номер (стр. 43)",
+    "comp": [
+      [
+        "Order",
+        "заказ"
+      ],
+      [
+        "Number",
+        "номер"
+      ]
+    ]
+  },
+  {
+    "en": "Original",
+    "ru": "оригинал, подлинник",
+    "ctx": "Original — оригинал документа (стр. 1)",
+    "comp": []
+  },
+  {
+    "en": "Other",
+    "ru": "другой, иной, прочий",
+    "ctx": "Other bus systems — другие шинные системы (стр. 16)",
+    "comp": []
+  },
+  {
+    "en": "Output",
+    "ru": "выход",
+    "ctx": "INPUT/OUTPUT — вход/выход (стр. 7)",
+    "comp": []
+  },
+  {
+    "en": "Outputs",
+    "ru": "выходы (множ. ч.)",
+    "ctx": "CPU Digital Outputs — дискретные выходы ЦП (стр. 20)",
+    "comp": [
+      [
+        "Output",
+        "выход"
+      ],
+      [
+        "Outputs",
+        "выходы (мн.ч.)"
+      ]
+    ]
+  },
+  {
+    "en": "Overview",
+    "ru": "обзор, сводка, общая схема",
+    "ctx": "PLC Overview — обзор ПЛК (стр. 13)",
+    "comp": []
+  },
+  {
+    "en": "Page",
+    "ru": "страница, лист",
+    "ctx": "Page 1/46 — номер страницы (стр. 1)",
+    "comp": []
+  },
+  {
+    "en": "Page Description",
+    "ru": "описание страницы (листа)",
+    "ctx": "Page description supplementary page field — описание листа (стр. 4)",
+    "comp": [
+      [
+        "Page",
+        "страница/лист"
+      ],
+      [
+        "Description",
+        "описание"
+      ]
+    ]
+  },
+  {
+    "en": "Panel",
+    "ru": "панель, щит, пульт",
+    "ctx": "Local Panel — местная панель (стр. 5)",
+    "comp": []
+  },
+  {
+    "en": "Panel Power Supply",
+    "ru": "источник питания панели, электропитание щита",
+    "ctx": "Panel Power Supply — питание панели (стр. 6)",
+    "comp": [
+      [
+        "Panel",
+        "панель/щит"
+      ],
+      [
+        "Power",
+        "питание"
+      ],
+      [
+        "Supply",
+        "источник"
+      ]
+    ]
+  },
+  {
+    "en": "PE (Protective Earth)",
+    "ru": "защитное заземление",
+    "ctx": "PE — защитное заземление (стр. 6)",
+    "comp": [
+      [
+        "PE",
+        "защитное заземление"
+      ],
+      [
+        "Protective",
+        "защитный"
+      ],
+      [
+        "Earth",
+        "земля"
+      ]
+    ]
+  },
+  {
+    "en": "Phase",
+    "ru": "фаза (электрической сети)",
+    "ctx": "L1/L2/L3 — фазы трёхфазной сети (стр. 6)",
+    "comp": []
+  },
+  {
+    "en": "PLC",
+    "ru": "программируемый логический контроллер, ПЛК",
+    "ctx": "PLC Overview — обзор ПЛК (стр. 13)",
+    "comp": [
+      [
+        "PLC",
+        "ПЛК"
+      ],
+      [
+        "Programmable",
+        "программируемый"
+      ],
+      [
+        "Logic",
+        "логический"
+      ],
+      [
+        "Controller",
+        "контроллер"
+      ]
+    ]
+  },
+  {
+    "en": "Pole",
+    "ru": "полюс (автоматического выключателя)",
+    "ctx": "2-pole, 1-pole — двухполюсный, однополюсный (стр. 6–9)",
+    "comp": []
+  },
+  {
+    "en": "Polymer",
+    "ru": "полимер, флокулянт",
+    "ctx": "Decanter Polymer Pump — насос полимера (стр. 12)",
+    "comp": []
+  },
+  {
+    "en": "Polymer Pump",
+    "ru": "насос полимера, насос подачи флокулянта",
+    "ctx": "Decanter Polymer Pump Speed — скорость насоса полимера (стр. 14)",
+    "comp": [
+      [
+        "Polymer",
+        "полимер/флокулянт"
+      ],
+      [
+        "Pump",
+        "насос"
+      ]
+    ]
+  },
+  {
+    "en": "Position",
+    "ru": "позиция, положение, обозначение",
+    "ctx": "Position source / Position target — позиция источника/приёмника (стр. 43)",
+    "comp": []
+  },
+  {
+    "en": "Position Source",
+    "ru": "позиция источника, обозначение источника (на стороне источника сигнала)",
+    "ctx": "Position source — позиция источника в кабельной диаграмме EPLAN (стр. 43)",
+    "comp": [
+      [
+        "Position",
+        "позиция"
+      ],
+      [
+        "Source",
+        "источник"
+      ]
+    ]
+  },
+  {
+    "en": "Position Target",
+    "ru": "позиция приёмника (цели), обозначение приёмника (на стороне приёмника сигнала)",
+    "ctx": "Position target — позиция приёмника в кабельной диаграмме EPLAN (стр. 43–45)",
+    "comp": [
+      [
+        "Position",
+        "позиция"
+      ],
+      [
+        "Target",
+        "приёмник/цель"
+      ]
+    ]
+  },
+  {
+    "en": "Power",
+    "ru": "питание, мощность, электроэнергия",
+    "ctx": "Inverter Power Connections — силовые подключения инвертора (стр. 10)",
+    "comp": []
+  },
+  {
+    "en": "Power Connection",
+    "ru": "силовое подключение, силовое соединение",
+    "ctx": "Inverter Power Connections — силовые подключения инвертора (стр. 10)",
+    "comp": [
+      [
+        "Power",
+        "сила/питание"
+      ],
+      [
+        "Connection",
+        "соединение"
+      ]
+    ]
+  },
+  {
+    "en": "Power Supply",
+    "ru": "источник питания, электропитание",
+    "ctx": "24V DC Power Supply — источник питания 24 В пост. тока (стр. 7)",
+    "comp": [
+      [
+        "Power",
+        "питание/мощность"
+      ],
+      [
+        "Supply",
+        "источник/подача"
+      ]
+    ]
+  },
+  {
+    "en": "Protective",
+    "ru": "защитный",
+    "ctx": "PE (Protective Earth) — защитное заземление (стр. 6)",
+    "comp": []
+  },
+  {
+    "en": "PS (Power Supply)",
+    "ru": "блок питания (модуль питания)",
+    "ctx": "-PS -F5 — блок питания и автомат (стр. 8)",
+    "comp": [
+      [
+        "PS",
+        "блок питания"
+      ],
+      [
+        "Power",
+        "питание"
+      ],
+      [
+        "Supply",
+        "источник"
+      ]
+    ]
+  },
+  {
+    "en": "PT100",
+    "ru": "платиновый термопреобразователь сопротивления PT100",
+    "ctx": "Decanter PT100 Converter Connections — подключения преобразователя PT100 (стр. 25)",
+    "comp": [
+      [
+        "PT",
+        "платиновый термопреобразователь"
+      ],
+      [
+        "100",
+        "100 Ом при 0°C"
+      ]
+    ]
+  },
+  {
+    "en": "PTC Sensor",
+    "ru": "PTC-датчик, позисторный датчик температуры",
+    "ctx": "Decanter Main Motor PTC Sensor — PTC-датчик главного двигателя (стр. 10)",
+    "comp": [
+      [
+        "PTC",
+        "позистор (Positive Temperature Coefficient)"
+      ],
+      [
+        "Sensor",
+        "датчик"
+      ]
+    ]
+  },
+  {
+    "en": "Pump",
+    "ru": "насос",
+    "ctx": "Feed Pump / Polymer Pump — питающий/полимерный насос (стр. 12)",
+    "comp": []
+  },
+  {
+    "en": "RD (Red)",
+    "ru": "красный (цвет жилы провода)",
+    "ctx": "White Red — белый, красный (стр. 31)",
+    "comp": [
+      [
+        "RD",
+        "красный"
+      ],
+      [
+        "Red",
+        "красный"
+      ]
+    ]
+  },
+  {
+    "en": "Reference (Referance)",
+    "ru": "задание, уставка, опорное значение",
+    "ctx": "Feed Pump Speed Referance — задание скорости питающего насоса (стр. 14)",
+    "comp": [
+      [
+        "Reference",
+        "задание/уставка"
+      ],
+      [
+        "Referance",
+        "опечатка; то же, что Reference"
+      ]
+    ]
+  },
+  {
+    "en": "Relay",
+    "ru": "реле",
+    "ctx": "Decanter Stopping Relay — реле остановки декантера (стр. 14)",
+    "comp": []
+  },
+  {
+    "en": "Relay Connection",
+    "ru": "подключение реле, релейное соединение",
+    "ctx": "Relay Connections — подключения реле (стр. 22–23)",
+    "comp": [
+      [
+        "Relay",
+        "реле"
+      ],
+      [
+        "Connection",
+        "соединение"
+      ]
+    ]
+  },
+  {
+    "en": "Report",
+    "ru": "отчёт, рапорт",
+    "ctx": "Reports — отчёты (стр. 33)",
+    "comp": []
+  },
+  {
+    "en": "Reports",
+    "ru": "отчёты (множ. ч.)",
+    "ctx": "Document type: Reports — тип документа: отчёты (стр. 4, 33)",
+    "comp": [
+      [
+        "Report",
+        "отчёт"
+      ],
+      [
+        "Reports",
+        "отчёты (мн.ч.)"
+      ]
+    ]
+  },
+  {
+    "en": "Reverse (REV)",
+    "ru": "назад, обратное вращение (команда инвертора)",
+    "ctx": "FWD REV — команды вперёд/назад инвертора (стр. 26)",
+    "comp": [
+      [
+        "Reverse",
+        "назад/обратный"
+      ],
+      [
+        "REV",
+        "сокр.: назад"
+      ]
+    ]
+  },
+  {
+    "en": "RS485",
+    "ru": "интерфейс RS-485 (последовательный интерфейс)",
+    "ctx": "RS485 Module Connections — подключения модуля RS-485 (стр. 17)",
+    "comp": []
+  },
+  {
+    "en": "Run",
+    "ru": "работа, ход, запуск",
+    "ctx": "Decanter Run Relay — реле работы декантера (стр. 20)",
+    "comp": []
+  },
+  {
+    "en": "Run Relay",
+    "ru": "реле работы, реле хода",
+    "ctx": "Decanter Main Motor Run Relay — реле работы главного двигателя (стр. 20)",
+    "comp": [
+      [
+        "Run",
+        "работа/ход"
+      ],
+      [
+        "Relay",
+        "реле"
+      ]
+    ]
+  },
+  {
+    "en": "Running",
+    "ru": "работающий, в работе, ход",
+    "ctx": "Decanter Running Relay — реле работы декантера (стр. 14)",
+    "comp": []
+  },
+  {
+    "en": "Safety",
+    "ru": "безопасность, защитный",
+    "ctx": "Safety Relay — реле безопасности (стр. 28)",
+    "comp": []
+  },
+  {
+    "en": "Safety Relay",
+    "ru": "реле безопасности",
+    "ctx": "Emergency Stop Safety Relay — реле безопасности (стр. 28)",
+    "comp": [
+      [
+        "Safety",
+        "безопасность"
+      ],
+      [
+        "Relay",
+        "реле"
+      ]
+    ]
+  },
+  {
+    "en": "Schematic",
+    "ru": "схема, принципиальная схема",
+    "ctx": "Electrical schematic — электрическая схема (стр. 4)",
+    "comp": []
+  },
+  {
+    "en": "Scroll",
+    "ru": "шнек (центрифуги)",
+    "ctx": "Decanter Scroll Motor — двигатель шнека декантера (стр. 11)",
+    "comp": []
+  },
+  {
+    "en": "Sensor",
+    "ru": "датчик, измерительный преобразователь",
+    "ctx": "Speed Sensor / Vibration Sensor — датчик скорости/вибрации (стр. 21)",
+    "comp": []
+  },
+  {
+    "en": "Sensors",
+    "ru": "датчики (множ. ч.)",
+    "ctx": "Temperature Sensors — датчики температуры (стр. 31)",
+    "comp": [
+      [
+        "Sensor",
+        "датчик"
+      ],
+      [
+        "Sensors",
+        "датчики (мн.ч.)"
+      ]
+    ]
+  },
+  {
+    "en": "Sheet",
+    "ru": "лист, страница",
+    "ctx": "Title Page / Cover Sheet — титульный лист (стр. 1)",
+    "comp": []
+  },
+  {
+    "en": "Signal",
+    "ru": "сигнал",
+    "ctx": "Flow Meter Signal — сигнал расходомера (стр. 19)",
+    "comp": []
+  },
+  {
+    "en": "SMPS",
+    "ru": "импульсный источник питания",
+    "ctx": "SMPS 120, 24VDC, 5A — импульсный блок питания (стр. 7)",
+    "comp": [
+      [
+        "SMPS",
+        "импульсный источник питания"
+      ],
+      [
+        "Switched",
+        "ключевой/импульсный"
+      ],
+      [
+        "Mode",
+        "режим"
+      ],
+      [
+        "Power",
+        "питание"
+      ],
+      [
+        "Supply",
+        "источник"
+      ]
+    ]
+  },
+  {
+    "en": "Solid",
+    "ru": "твёрдый, плотный",
+    "ctx": "Solid Side — сторона твёрдой фазы (стр. 15)",
+    "comp": []
+  },
+  {
+    "en": "Solid Side",
+    "ru": "сторона твёрдой фазы, сторона осадка (декантера)",
+    "ctx": "Decanter Solid Side Vibration Sensor — датчик вибрации на стороне осадка (стр. 15)",
+    "comp": [
+      [
+        "Solid",
+        "твёрдый"
+      ],
+      [
+        "Side",
+        "сторона"
+      ]
+    ]
+  },
+  {
+    "en": "Source",
+    "ru": "источник (сигнала, питания, проводника)",
+    "ctx": "Position source / Function text source — источник в кабельной диаграмме EPLAN (стр. 43)",
+    "comp": []
+  },
+  {
+    "en": "Spare",
+    "ru": "резерв, резервный, запасной",
+    "ctx": "Spare — резервный вход/выход (стр. 14)",
+    "comp": []
+  },
+  {
+    "en": "Speed",
+    "ru": "скорость",
+    "ctx": "Decanter Scroll Speed Sensor — датчик скорости шнека (стр. 14)",
+    "comp": []
+  },
+  {
+    "en": "Speed Sensor",
+    "ru": "датчик скорости",
+    "ctx": "Decanter Scroll Speed Sensor — датчик скорости шнека (стр. 14)",
+    "comp": [
+      [
+        "Speed",
+        "скорость"
+      ],
+      [
+        "Sensor",
+        "датчик"
+      ]
+    ]
+  },
+  {
+    "en": "Start",
+    "ru": "пуск, запуск, начало",
+    "ctx": "Decanter Start Button — кнопка пуска декантера (стр. 14)",
+    "comp": []
+  },
+  {
+    "en": "Start Button",
+    "ru": "кнопка пуска, кнопка запуска",
+    "ctx": "Decanter Start Button — кнопка пуска декантера (стр. 14)",
+    "comp": [
+      [
+        "Start",
+        "пуск/запуск"
+      ],
+      [
+        "Button",
+        "кнопка"
+      ]
+    ]
+  },
+  {
+    "en": "Stop",
+    "ru": "останов, остановка, стоп",
+    "ctx": "Decanter Stop Button — кнопка останова декантера (стр. 14)",
+    "comp": []
+  },
+  {
+    "en": "Stop Button",
+    "ru": "кнопка останова, кнопка остановки",
+    "ctx": "Decanter Stop Button — кнопка останова (стр. 14)",
+    "comp": [
+      [
+        "Stop",
+        "останов/стоп"
+      ],
+      [
+        "Button",
+        "кнопка"
+      ]
+    ]
+  },
+  {
+    "en": "Stopping",
+    "ru": "остановка, останов",
+    "ctx": "Stopping Relay — реле остановки (стр. 14)",
+    "comp": []
+  },
+  {
+    "en": "Stopping Relay",
+    "ru": "реле останова, реле остановки",
+    "ctx": "Decanter Stopping Relay — реле останова декантера (стр. 14)",
+    "comp": [
+      [
+        "Stopping",
+        "остановка"
+      ],
+      [
+        "Relay",
+        "реле"
+      ]
+    ]
+  },
+  {
+    "en": "Structure",
+    "ru": "структура, структурный",
+    "ctx": "Structure identifier — структурный идентификатор (стр. 4)",
+    "comp": []
+  },
+  {
+    "en": "Structure Identifier",
+    "ru": "структурный идентификатор, структурное обозначение",
+    "ctx": "Structure identifier overview — обзор структурных идентификаторов (стр. 4)",
+    "comp": [
+      [
+        "Structure",
+        "структура"
+      ],
+      [
+        "Identifier",
+        "идентификатор"
+      ]
+    ]
+  },
+  {
+    "en": "Supplementary",
+    "ru": "дополнительный, вспомогательный",
+    "ctx": "Supplementary page field — поле дополнительной страницы (стр. 4)",
+    "comp": []
+  },
+  {
+    "en": "Supply",
+    "ru": "источник, подача, снабжение",
+    "ctx": "Power Supply — источник питания (стр. 7)",
+    "comp": []
+  },
+  {
+    "en": "Switch",
+    "ru": "выключатель, переключатель",
+    "ctx": "Decanter Cover Switch — выключатель крышки декантера (стр. 29)",
+    "comp": []
+  },
+  {
+    "en": "Table",
+    "ru": "таблица",
+    "ctx": "Table of contents — оглавление (стр. 2)",
+    "comp": []
+  },
+  {
+    "en": "Table of Contents",
+    "ru": "оглавление, содержание",
+    "ctx": "Table of contents — оглавление документа (стр. 2–3)",
+    "comp": [
+      [
+        "Table",
+        "таблица"
+      ],
+      [
+        "of",
+        "из/от (предлог)"
+      ],
+      [
+        "Contents",
+        "содержание"
+      ]
+    ]
+  },
+  {
+    "en": "Target",
+    "ru": "приёмник, цель (конец проводника в EPLAN)",
+    "ctx": "Function text target / Position target — приёмник сигнала в кабельной диаграмме (стр. 43–45)",
+    "comp": []
+  },
+  {
+    "en": "Temperature",
+    "ru": "температура",
+    "ctx": "Decanter Liquid Side Temperature — температура на жидкостной стороне (стр. 15)",
+    "comp": []
+  },
+  {
+    "en": "Temperature Sensor",
+    "ru": "датчик температуры",
+    "ctx": "Temperature Sensors — датчики температуры (стр. 31)",
+    "comp": [
+      [
+        "Temperature",
+        "температура"
+      ],
+      [
+        "Sensor",
+        "датчик"
+      ]
+    ]
+  },
+  {
+    "en": "Terminal",
+    "ru": "клемма, зажим, вывод",
+    "ctx": "Terminal diagram — клеммная схема (стр. 33–42)",
+    "comp": []
+  },
+  {
+    "en": "Terminal Connection Diagram",
+    "ru": "схема клеммных соединений",
+    "ctx": "Function designation: Terminal connection diagram (стр. 4)",
+    "comp": [
+      [
+        "Terminal",
+        "клемма"
+      ],
+      [
+        "Connection",
+        "соединение"
+      ],
+      [
+        "Diagram",
+        "схема"
+      ]
+    ]
+  },
+  {
+    "en": "Terminal Diagram",
+    "ru": "клеммная схема, схема выводов",
+    "ctx": "Terminal diagram =+P-F9 — клеммная схема (стр. 33)",
+    "comp": [
+      [
+        "Terminal",
+        "клемма"
+      ],
+      [
+        "Diagram",
+        "схема"
+      ]
+    ]
+  },
+  {
+    "en": "Text",
+    "ru": "текст",
+    "ctx": "Function text — функциональный текст (стр. 43)",
+    "comp": []
+  },
+  {
+    "en": "Thermic",
+    "ru": "тепловой",
+    "ctx": "Thermic Fault — тепловая неисправность (стр. 14)",
+    "comp": []
+  },
+  {
+    "en": "Thermic Fault",
+    "ru": "тепловая неисправность, срабатывание тепловой защиты",
+    "ctx": "Cake Conveyor Thermic Fault — тепловая защита конвейера осадка (стр. 14)",
+    "comp": [
+      [
+        "Thermic",
+        "тепловой"
+      ],
+      [
+        "Fault",
+        "неисправность"
+      ]
+    ]
+  },
+  {
+    "en": "Title",
+    "ru": "заголовок, наименование, название",
+    "ctx": "Title Page / Cover Sheet — титульный лист (стр. 1)",
+    "comp": []
+  },
+  {
+    "en": "Title Page",
+    "ru": "титульный лист",
+    "ctx": "Title Page / Cover Sheet — титульный лист (стр. 1)",
+    "comp": [
+      [
+        "Title",
+        "заголовок/название"
+      ],
+      [
+        "Page",
+        "страница/лист"
+      ]
+    ]
+  },
+  {
+    "en": "Transistor",
+    "ru": "транзистор",
+    "ctx": "Transistor output — транзисторный выход (стр. 26)",
+    "comp": []
+  },
+  {
+    "en": "Transistor Output",
+    "ru": "транзисторный выход",
+    "ctx": "Transistor output — транзисторный выход инвертора (стр. 26)",
+    "comp": [
+      [
+        "Transistor",
+        "транзистор"
+      ],
+      [
+        "Output",
+        "выход"
+      ]
+    ]
+  },
+  {
+    "en": "Type",
+    "ru": "тип, марка",
+    "ctx": "Cable type / Document type — тип кабеля / тип документа (стр. 4, 43)",
+    "comp": []
+  },
+  {
+    "en": "VAC (Volts AC)",
+    "ru": "вольт переменного тока",
+    "ctx": "220VAC — 220 вольт переменного тока (стр. 6)",
+    "comp": [
+      [
+        "V",
+        "вольт"
+      ],
+      [
+        "AC",
+        "переменный ток"
+      ]
+    ]
+  },
+  {
+    "en": "Valve",
+    "ru": "клапан, вентиль",
+    "ctx": "Cleaning Valve — клапан промывки (стр. 20)",
+    "comp": []
+  },
+  {
+    "en": "VDC (Volts DC)",
+    "ru": "вольт постоянного тока",
+    "ctx": "24VDC — 24 вольта постоянного тока (стр. 7)",
+    "comp": [
+      [
+        "V",
+        "вольт"
+      ],
+      [
+        "DC",
+        "постоянный ток"
+      ]
+    ]
+  },
+  {
+    "en": "Ventilation",
+    "ru": "вентиляция",
+    "ctx": "Enclosure Ventilation — вентиляция шкафа (стр. 9)",
+    "comp": []
+  },
+  {
+    "en": "Vibration",
+    "ru": "вибрация, колебание",
+    "ctx": "Decanter Liquid Side Vibration Sensor — датчик вибрации (стр. 15)",
+    "comp": []
+  },
+  {
+    "en": "Vibration Sensor",
+    "ru": "датчик вибрации, вибродатчик",
+    "ctx": "Decanter Vibration Sensor — датчик вибрации декантера (стр. 32)",
+    "comp": [
+      [
+        "Vibration",
+        "вибрация"
+      ],
+      [
+        "Sensor",
+        "датчик"
+      ]
+    ]
+  },
+  {
+    "en": "Volt / V",
+    "ru": "вольт (единица напряжения)",
+    "ctx": "380 V, 220 V, 24 V — значения напряжения (стр. 1)",
+    "comp": []
+  },
+  {
+    "en": "Watt / W",
+    "ru": "ватт (единица мощности)",
+    "ctx": "19 kW — 19 киловатт (стр. 1)",
+    "comp": []
+  },
+  {
+    "en": "WH (White)",
+    "ru": "белый (цвет жилы провода)",
+    "ctx": "4x0,34 BN WH BK — белый, коричневый, чёрный (стр. 32)",
+    "comp": [
+      [
+        "WH",
+        "белый"
+      ],
+      [
+        "White",
+        "белый"
+      ]
+    ]
+  },
+  {
+    "en": "Wire",
+    "ru": "провод, жила, токопроводящая жила",
+    "ctx": "Free wires — свободные (резервные) жилы (стр. 43)",
+    "comp": []
+  },
+  {
+    "en": "Wire Connection",
+    "ru": "проводное соединение, соединение проводов",
+    "ctx": "Cable/wire connection — кабельное/проводное соединение (стр. 33)",
+    "comp": [
+      [
+        "Wire",
+        "провод"
+      ],
+      [
+        "Connection",
+        "соединение"
+      ]
+    ]
+  },
+  {
+    "en": "Wires",
+    "ru": "провода, жилы (множ. ч.)",
+    "ctx": "Free wires — свободные жилы (стр. 43)",
+    "comp": [
+      [
+        "Wire",
+        "провод/жила"
+      ],
+      [
+        "Wires",
+        "провода/жилы (мн.ч.)"
+      ]
+    ]
+  },
+  {
+    "en": "YE (Yellow)",
+    "ru": "жёлтый (цвет жилы провода)",
+    "ctx": "GN/YE PE — зелёно-жёлтый защитный заземлитель (стр. 43)",
+    "comp": [
+      [
+        "YE",
+        "жёлтый"
+      ],
+      [
+        "Yellow",
+        "жёлтый"
+      ]
+    ]
+  }
+];
+const STORAGE_BOOKMARKS = 's300_glossary_bookmarks_v2';
+const STORAGE_THEME = 's300_glossary_theme_v2';
+const STORAGE_INSTALL_DISMISSED = 's300_install_dismissed_v2';
+
+let bookmarks = new Set(JSON.parse(localStorage.getItem(STORAGE_BOOKMARKS) || '[]'));
+let currentLetter = null;
+let onlyBookmarks = false;
+let searchQuery = '';
+let typeFilter = 'all';  // 'all' | 'word' | 'phrase'
+
+const $list = document.getElementById('list');
+const $search = document.getElementById('search');
+const $clear = document.getElementById('clearSearch');
+const $alphabet = document.getElementById('alphabet');
+const $stats = document.getElementById('stats');
+const $filterInfo = document.getElementById('filterInfo');
+const $toTop = document.getElementById('toTop');
+const $themeToggle = document.getElementById('themeToggle');
+const $bmToggle = document.getElementById('bookmarksToggle');
+const $bmBadge = document.getElementById('bmBadge');
+const $subTitle = document.getElementById('subTitle');
+const $toast = document.getElementById('toast');
+const $installBanner = document.getElementById('installBanner');
+const $installBtn = document.getElementById('installBtn');
+const $installClose = document.getElementById('installClose');
+
+let deferredPrompt = null;
+
+// === Helpers ===
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+function highlight(text, query) {
+  if (!query) return escapeHtml(text);
+  const safe = escapeHtml(text);
+  const re = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+  return safe.replace(re, '<mark>$1</mark>');
+}
+
+function getLetter(term) {
+  // Use first alphabetic char (skip non-letters)
+  const m = term.match(/[A-Za-zА-Яа-я]/);
+  return m ? m[0].toUpperCase() : '#';
+}
+
+function isPhrase(term) {
+  return term.trim().includes(' ');
+}
+
+function showToast(msg, duration = 2200) {
+  $toast.textContent = msg;
+  $toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => $toast.classList.remove('show'), duration);
+}
+
+// === Alphabet ===
+function buildAlphabet() {
+  const letters = [...new Set(DATA.map(d => getLetter(d.en)))].sort();
+  $alphabet.innerHTML = '';
+  const allBtn = document.createElement('button');
+  allBtn.className = 'alpha-btn active';
+  allBtn.dataset.letter = '*';
+  allBtn.textContent = 'Все';
+  $alphabet.appendChild(allBtn);
+  letters.forEach(L => {
+    const cnt = DATA.filter(d => getLetter(d.en) === L).length;
+    const btn = document.createElement('button');
+    btn.className = 'alpha-btn';
+    btn.dataset.letter = L;
+    btn.innerHTML = L + '<span class="count">' + cnt + '</span>';
+    $alphabet.appendChild(btn);
+  });
+  $alphabet.addEventListener('click', e => {
+    const btn = e.target.closest('.alpha-btn');
+    if (!btn) return;
+    $alphabet.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentLetter = btn.dataset.letter === '*' ? null : btn.dataset.letter;
+    onlyBookmarks = false;
+    $bmToggle.classList.remove('active');
+    render();
+  });
+}
+
+// === Filter tabs (word/phrase) ===
+function setupFilterTabs() {
+  const wordCount = DATA.filter(d => !isPhrase(d.en)).length;
+  const phraseCount = DATA.filter(d => isPhrase(d.en)).length;
+  document.getElementById('cnt-all').textContent = DATA.length;
+  document.getElementById('cnt-word').textContent = wordCount;
+  document.getElementById('cnt-phrase').textContent = phraseCount;
+  
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      typeFilter = tab.dataset.filter;
+      render();
+    });
+  });
+}
+
+// === Render ===
+function render() {
+  let filtered = DATA;
+  
+  // Type filter
+  if (typeFilter === 'word') {
+    filtered = filtered.filter(d => !isPhrase(d.en));
+  } else if (typeFilter === 'phrase') {
+    filtered = filtered.filter(d => isPhrase(d.en));
+  }
+  
+  // Bookmarks filter
+  if (onlyBookmarks) {
+    filtered = filtered.filter(d => bookmarks.has(d.en));
+  }
+  
+  // Letter filter
+  if (currentLetter) {
+    filtered = filtered.filter(d => getLetter(d.en) === currentLetter);
+  }
+  
+  // Search
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    filtered = filtered.filter(d =>
+      d.en.toLowerCase().includes(q) ||
+      d.ru.toLowerCase().includes(q) ||
+      d.ctx.toLowerCase().includes(q) ||
+      (d.comp && d.comp.some(c => c[0].toLowerCase().includes(q) || c[1].toLowerCase().includes(q)))
+    );
+  }
+  
+  // Stats
+  $stats.innerHTML = 'Показано <b>' + filtered.length + '</b> из <b>' + DATA.length + '</b> терминов' +
+    (bookmarks.size > 0 ? ' · ★ ' + bookmarks.size + ' в закладках' : '');
+  
+  // Bookmark badge
+  $bmBadge.textContent = bookmarks.size;
+  $bmBadge.classList.toggle('show', bookmarks.size > 0);
+  
+  // Filter info chip
+  let filterHtml = '';
+  if (onlyBookmarks || currentLetter || typeFilter !== 'all') {
+    filterHtml = '<div class="filter-chip">';
+    const parts = [];
+    if (onlyBookmarks) parts.push('★ Закладки');
+    if (typeFilter === 'word') parts.push('Только слова');
+    if (typeFilter === 'phrase') parts.push('Только словосочетания');
+    if (currentLetter) parts.push('Буква ' + currentLetter);
+    filterHtml += parts.join(' · ');
+    filterHtml += ' <button id="clearFilter">×</button></div>';
+  }
+  $filterInfo.innerHTML = filterHtml;
+  const $cf = document.getElementById('clearFilter');
+  if ($cf) {
+    $cf.addEventListener('click', () => {
+      onlyBookmarks = false;
+      currentLetter = null;
+      typeFilter = 'all';
+      $bmToggle.classList.remove('active');
+      $alphabet.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+      $alphabet.querySelector('[data-letter="*"]').classList.add('active');
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector('.filter-tab[data-filter="all"]').classList.add('active');
+      render();
+    });
+  }
+  
+  if (filtered.length === 0) {
+    $list.innerHTML = '<div class="empty"><div class="icon">🔍</div>Ничего не найдено.<br>Попробуйте изменить запрос или сбросить фильтры.</div>';
+    return;
+  }
+  
+  // Group by letter
+  const groups = {};
+  filtered.forEach(d => {
+    const L = getLetter(d.en);
+    if (!groups[L]) groups[L] = [];
+    groups[L].push(d);
+  });
+  
+  let html = '';
+  Object.keys(groups).sort().forEach(L => {
+    html += '<h2 class="section-letter" id="letter-' + L + '">' + L + '</h2>';
+    groups[L].forEach(d => {
+      const isBm = bookmarks.has(d.en);
+      const isPhr = isPhrase(d.en);
+      const tag = isPhr
+        ? '<span class="tag phrase">словосочетание</span>'
+        : '<span class="tag">слово</span>';
+      const compBtn = (d.comp && d.comp.length > 0) ? `
+        <button class="components-toggle" data-term="${escapeHtml(d.en)}">
+          <span class="arrow">▶</span> Разбор компонентов (${d.comp.length})
+        </button>
+        <div class="components" id="comp-${escapeHtml(d.en).replace(/[^a-z0-9]/gi, '_')}">
+          <ul class="components-list">
+            ${d.comp.map(c => `
+              <li>
+                <span class="comp-en">${highlight(c[0], searchQuery)}</span>
+                <span class="comp-arrow">→</span>
+                <span class="comp-ru">${highlight(c[1], searchQuery)}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      ` : '';
+      html += `
+        <article class="card">
+          <button class="bookmark-btn ${isBm ? 'active' : ''}" data-term="${escapeHtml(d.en)}" title="В закладки">${isBm ? '★' : '☆'}</button>
+          <h3 class="card-en">${highlight(d.en, searchQuery)} ${tag}</h3>
+          <p class="card-ru">${highlight(d.ru, searchQuery)}</p>
+          <p class="card-ctx">${highlight(d.ctx, searchQuery)}</p>
+          ${compBtn}
+        </article>
+      `;
+    });
+  });
+  $list.innerHTML = html;
+  
+  // Bookmark events
+  $list.querySelectorAll('.bookmark-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const term = btn.dataset.term;
+      if (bookmarks.has(term)) {
+        bookmarks.delete(term);
+        btn.classList.remove('active');
+        btn.textContent = '☆';
+        showToast('Удалено из закладок');
+      } else {
+        bookmarks.add(term);
+        btn.classList.add('active');
+        btn.textContent = '★';
+        showToast('Добавлено в закладки');
+      }
+      localStorage.setItem(STORAGE_BOOKMARKS, JSON.stringify([...bookmarks]));
+      $bmBadge.textContent = bookmarks.size;
+      $bmBadge.classList.toggle('show', bookmarks.size > 0);
+      if (onlyBookmarks) render();
+    });
+  });
+  
+  // Components toggle
+  $list.querySelectorAll('.components-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const term = btn.dataset.term;
+      const id = 'comp-' + term.replace(/[^a-z0-9]/gi, '_');
+      const $comp = document.getElementById(id);
+      const isOpen = btn.classList.toggle('open');
+      $comp.classList.toggle('show', isOpen);
+      btn.querySelector('.arrow').textContent = isOpen ? '▼' : '▶';
+    });
+  });
+}
+
+// === Search ===
+$search.addEventListener('input', e => {
+  searchQuery = e.target.value.trim();
+  $clear.classList.toggle('show', !!searchQuery);
+  render();
+});
+$clear.addEventListener('click', () => {
+  $search.value = '';
+  searchQuery = '';
+  $clear.classList.remove('show');
+  $search.focus();
+  render();
+});
+
+// === Theme ===
+function setTheme(t) {
+  document.body.dataset.theme = t;
+  localStorage.setItem(STORAGE_THEME, t);
+  $themeToggle.textContent = t === 'dark' ? '☀' : '◐';
+  const themeColor = t === 'dark' ? '#131417' : '#1B2A4A';
+  document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.setAttribute('content', themeColor));
+}
+const savedTheme = localStorage.getItem(STORAGE_THEME)
+  || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+setTheme(savedTheme);
+$themeToggle.addEventListener('click', () => {
+  setTheme(document.body.dataset.theme === 'dark' ? 'light' : 'dark');
+});
+
+// === Bookmarks filter ===
+$bmToggle.addEventListener('click', () => {
+  if (bookmarks.size === 0) {
+    showToast('Закладок пока нет. Нажмите ☆ на карточке термина.');
+    return;
+  }
+  onlyBookmarks = !onlyBookmarks;
+  $bmToggle.classList.toggle('active', onlyBookmarks);
+  if (onlyBookmarks) {
+    $alphabet.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+    $alphabet.querySelector('[data-letter="*"]').classList.add('active');
+    currentLetter = null;
+  }
+  render();
+});
+
+// === Back to top ===
+window.addEventListener('scroll', () => {
+  $toTop.classList.toggle('show', window.scrollY > 400);
+}, { passive: true });
+$toTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// === Keyboard shortcuts ===
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement !== $search) {
+    e.preventDefault();
+    $search.focus();
+  }
+  if (e.key === 'Escape') {
+    if (document.activeElement === $search) {
+      $search.blur();
+    }
+  }
+});
+
+// === PWA: Service Worker registration ===
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => {
+        console.log('[SW] registered, scope:', reg.scope);
+        // Check for updates
+        reg.addEventListener('updatefound', () => {
+          const nw = reg.installing;
+          if (nw) {
+            nw.addEventListener('statechange', () => {
+              if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+                showToast('Доступна новая версия, обновляем…');
+                nw.postMessage('SKIP_WAITING');
+                setTimeout(() => window.location.reload(), 1000);
+              }
+            });
+          }
+        });
+      })
+      .catch(err => console.warn('[SW] registration failed:', err));
+  });
+}
+
+// === PWA: install prompt ===
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const dismissed = localStorage.getItem(STORAGE_INSTALL_DISMISSED);
+  if (!dismissed) {
+    setTimeout(() => $installBanner.classList.add('show'), 1500);
+  }
+});
+
+$installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) {
+    showToast('Установка недоступна в этом браузере');
+    return;
+  }
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === 'accepted') {
+    showToast('Приложение установлено!');
+  }
+  deferredPrompt = null;
+  $installBanner.classList.remove('show');
+});
+
+$installClose.addEventListener('click', () => {
+  $installBanner.classList.remove('show');
+  localStorage.setItem(STORAGE_INSTALL_DISMISSED, '1');
+});
+
+window.addEventListener('appinstalled', () => {
+  $installBanner.classList.remove('show');
+  showToast('Приложение установлено на устройство');
+});
+
+// === iOS detected → manual install instructions ===
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+}
+function isStandalone() {
+  return window.matchMedia('(display-mode: standalone)').matches
+    || window.navigator.standalone === true;
+}
+if (isIOS() && !isStandalone()) {
+  const dismissed = localStorage.getItem(STORAGE_INSTALL_DISMISSED);
+  if (!dismissed) {
+    setTimeout(() => {
+      showToast('📲 Чтобы установить на iPhone: «Поделиться» → «На экран Домой»', 5000);
+    }, 2500);
+  }
+}
+
+// === URL params (for shortcuts) ===
+function handleUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  const action = params.get('action');
+  if (action === 'search') {
+    setTimeout(() => $search.focus(), 300);
+  } else if (action === 'bookmarks') {
+    setTimeout(() => $bmToggle.click(), 300);
+  }
+}
+
+// === Init ===
+$subTitle.textContent = 'S300 Электросхемы · ' + DATA.length + ' терминов';
+buildAlphabet();
+setupFilterTabs();
+render();
+handleUrlParams();
+</script>
+</body>
+</html>
